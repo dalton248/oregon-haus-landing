@@ -9,10 +9,7 @@ A modern, responsive landing page for **Oregon Haus**, a historic luxury Airbnb 
 - **Rating:** ★ 4.95 Superhost Listing
 - **Airbnb Listing:** [View on Airbnb](https://www.airbnb.com/rooms/1038646434083956823)
 
-## 📁 Repository Structure
-- `index.html`: Main landing page
-- `styles.css`: Custom styling & layout
-- `assets/`: Images and brand resources
-
----
-*Created for dalton248*
+## 🛠️ Tech Stack
+- **Framework:** React + Vite
+- **Styling:** Tailwind CSS + Lucide React Icons
+- **Typography:** Plus Jakarta Sans & Playfair Display
