@@ -1,13 +1,46 @@
-import React from 'react';
-import { Star, MapPin, Users, Bed, Bath, Home, Calendar, ExternalLink, ShieldCheck, Sparkles, Coffee, Wifi, Tv } from 'lucide-react';
+import React, { useState } from 'react';
+import {
+  Star,
+  MapPin,
+  Users,
+  Bed,
+  Bath,
+  Home,
+  Calendar,
+  ExternalLink,
+  ShieldCheck,
+  Sparkles,
+  Coffee,
+  Wifi,
+  Tv,
+  Grid,
+  Images,
+} from 'lucide-react';
+
+import { PHOTOS, HERO_PHOTOS } from './data/photos';
+import HeroBentoGrid from './components/HeroBentoGrid';
+import PhotoGallery from './components/PhotoGallery';
+import LightboxModal from './components/LightboxModal';
 
 const AIRBNB_URL = "https://www.airbnb.com/rooms/1038646434083956823";
 
 export default function App() {
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+
+  const handleOpenLightbox = (index = 0) => {
+    setCurrentPhotoIndex(index);
+    setIsLightboxOpen(true);
+  };
+
+  const handleCloseLightbox = () => {
+    setIsLightboxOpen(false);
+  };
+
   return (
-    <div className="min-h-screen bg-stone-50 text-stone-800 flex flex-col">
+    <div className="min-h-screen bg-stone-50 text-stone-800 flex flex-col font-sans">
       {/* Top Banner / Navbar */}
-      <header className="sticky top-0 z-50 bg-stone-900/90 backdrop-blur-md text-stone-100 border-b border-stone-800">
+      <header className="sticky top-0 z-40 bg-stone-900/90 backdrop-blur-md text-stone-100 border-b border-stone-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <Home className="w-7 h-7 text-amber-400" />
@@ -15,27 +48,37 @@ export default function App() {
           </div>
           <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-stone-300">
             <a href="#about" className="hover:text-amber-400 transition-colors">About</a>
+            <a href="#gallery" className="hover:text-amber-400 transition-colors">Photos ({PHOTOS.length})</a>
+            <a href="#specs" className="hover:text-amber-400 transition-colors">Property Specs</a>
             <a href="#amenities" className="hover:text-amber-400 transition-colors">Amenities</a>
-            <a href="#location" className="hover:text-amber-400 transition-colors">Location</a>
           </nav>
-          <a
-            href={AIRBNB_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center space-x-2 bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white font-medium px-5 py-2.5 rounded-full shadow-lg hover:shadow-rose-900/30 transition-all transform hover:-translate-y-0.5"
-          >
-            <span>Book on Airbnb</span>
-            <ExternalLink className="w-4 h-4" />
-          </a>
+          <div className="flex items-center space-x-3">
+            <button
+              onClick={() => handleOpenLightbox(0)}
+              className="hidden sm:inline-flex items-center space-x-2 bg-stone-800 hover:bg-stone-700 text-stone-200 text-sm font-medium px-4 py-2 rounded-full border border-stone-700 transition-colors"
+            >
+              <Images className="w-4 h-4 text-amber-400" />
+              <span>Gallery</span>
+            </button>
+            <a
+              href={AIRBNB_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center space-x-2 bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white font-medium px-5 py-2.5 rounded-full shadow-lg hover:shadow-rose-900/30 transition-all transform hover:-translate-y-0.5"
+            >
+              <span>Book on Airbnb</span>
+              <ExternalLink className="w-4 h-4" />
+            </a>
+          </div>
         </div>
       </header>
 
       <main className="flex-grow">
-        {/* Hero Section */}
-        <section className="relative bg-stone-900 text-white py-24 sm:py-32 overflow-hidden">
-          <div className="absolute inset-0 z-0 opacity-40 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
-          
-          <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
+        {/* Hero Header Section */}
+        <section className="relative bg-stone-900 text-white pt-16 pb-12 sm:pt-20 sm:pb-16 overflow-hidden">
+          <div className="absolute inset-0 z-0 opacity-30 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
+
+          <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
             <div className="inline-flex items-center space-x-2 bg-amber-500/10 border border-amber-500/30 text-amber-300 px-4 py-1.5 rounded-full text-sm font-medium">
               <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
               <span>★ 4.95 Superhost Listing in Dayton, OH</span>
@@ -49,32 +92,40 @@ export default function App() {
             </h1>
 
             <p className="max-w-2xl mx-auto text-lg sm:text-xl text-stone-300 leading-relaxed font-light">
-              Welcome to Oregon Haus. Originally built as Dayton’s first German Methodist Church, 
+              Welcome to Oregon Haus. Originally built as Dayton’s first German Methodist Church,
               this newly renovated historic estate offers an unforgettable retreat in the heart of the Oregon District.
             </p>
 
-            <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
                 href={AIRBNB_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold px-8 py-4 rounded-xl shadow-xl transition-all transform hover:-translate-y-0.5 text-lg"
+                className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold px-8 py-3.5 rounded-xl shadow-xl transition-all transform hover:-translate-y-0.5 text-base sm:text-lg"
               >
                 <Calendar className="w-5 h-5" />
                 <span>Reserve Your Stay</span>
               </a>
-              <a
-                href="#specs"
-                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-stone-800 hover:bg-stone-700 text-stone-200 font-semibold px-8 py-4 rounded-xl border border-stone-700 transition-all text-lg"
+              <button
+                onClick={() => handleOpenLightbox(0)}
+                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-stone-800 hover:bg-stone-700 text-stone-200 font-semibold px-8 py-3.5 rounded-xl border border-stone-700 transition-all text-base sm:text-lg"
               >
-                <span>Explore Property</span>
-              </a>
+                <Images className="w-5 h-5 text-amber-400" />
+                <span>View All {PHOTOS.length} Photos</span>
+              </button>
             </div>
           </div>
+
+          {/* Airbnb-style Hero Bento Grid Showcase */}
+          <HeroBentoGrid
+            photos={HERO_PHOTOS}
+            onOpenGallery={() => handleOpenLightbox(0)}
+            onSelectPhoto={(idx) => handleOpenLightbox(idx)}
+          />
         </section>
 
         {/* Property Quick Specs */}
-        <section id="specs" className="-mt-10 relative z-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section id="specs" className="-mt-8 relative z-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-xl border border-stone-200/80 p-6 sm:p-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
             <div className="space-y-1 border-r last:border-0 border-stone-100 pr-2">
               <Bed className="w-6 h-6 mx-auto text-amber-600 mb-2" />
@@ -91,7 +142,7 @@ export default function App() {
             <div className="space-y-1 border-r last:border-0 border-stone-100 pr-2">
               <Users className="w-6 h-6 mx-auto text-amber-600 mb-2" />
               <div className="text-2xl font-bold text-stone-900">Large Groups</div>
-              <div className="text-xs font-medium text-stone-500 uppercase tracking-wider">Family & Business</div>
+              <div className="text-xs font-medium text-stone-500 uppercase tracking-wider">Family & Retreats</div>
             </div>
 
             <div className="space-y-1">
@@ -101,6 +152,12 @@ export default function App() {
             </div>
           </div>
         </section>
+
+        {/* Filterable Full Photo Gallery Section */}
+        <PhotoGallery
+          photos={PHOTOS}
+          onSelectPhoto={(globalIdx) => handleOpenLightbox(globalIdx)}
+        />
 
         {/* About Section */}
         <section id="about" className="py-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
@@ -113,28 +170,28 @@ export default function App() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 pt-6">
-            <div className="bg-stone-100/70 rounded-2xl p-8 border border-stone-200 space-y-4 hover:shadow-md transition-shadow">
+          <div id="amenities" className="grid md:grid-cols-3 gap-8 pt-6">
+            <div className="bg-white rounded-2xl p-8 border border-stone-200/80 shadow-sm space-y-4 hover:shadow-md transition-shadow">
               <Sparkles className="w-8 h-8 text-amber-600" />
               <h3 className="text-xl font-bold text-stone-900">Architectural Heritage</h3>
               <p className="text-stone-600 text-sm leading-relaxed">
-                Experience vaulted spaces and historical character originally constructed as a 19th-century house of worship.
+                Experience vaulted timber spaces and historical character originally constructed as a 19th-century house of worship.
               </p>
             </div>
 
-            <div className="bg-stone-100/70 rounded-2xl p-8 border border-stone-200 space-y-4 hover:shadow-md transition-shadow">
+            <div className="bg-white rounded-2xl p-8 border border-stone-200/80 shadow-sm space-y-4 hover:shadow-md transition-shadow">
               <Coffee className="w-8 h-8 text-amber-600" />
               <h3 className="text-xl font-bold text-stone-900">Gourmet Living</h3>
               <p className="text-stone-600 text-sm leading-relaxed">
-                Featuring an expansive state-of-the-art chef's kitchen, grand dining hall, and relaxed gathering rooms for everyone.
+                Featuring an expansive state-of-the-art chef's kitchen, grand banquet dining, and relaxed gathering rooms for everyone.
               </p>
             </div>
 
-            <div className="bg-stone-100/70 rounded-2xl p-8 border border-stone-200 space-y-4 hover:shadow-md transition-shadow">
+            <div className="bg-white rounded-2xl p-8 border border-stone-200/80 shadow-sm space-y-4 hover:shadow-md transition-shadow">
               <MapPin className="w-8 h-8 text-amber-600" />
               <h3 className="text-xl font-bold text-stone-900">Prime Location</h3>
               <p className="text-stone-600 text-sm leading-relaxed">
-                Walk straight out your door into the historic Oregon District's finest restaurants, coffee shops, and entertainment.
+                Walk straight out your door into the historic Oregon District's finest restaurants, craft cocktail bars, coffee shops, and entertainment.
               </p>
             </div>
           </div>
@@ -145,9 +202,9 @@ export default function App() {
           <div className="max-w-4xl mx-auto px-4 text-center space-y-6">
             <h2 className="text-3xl sm:text-4xl font-serif font-bold">Ready to Experience Oregon Haus?</h2>
             <p className="text-stone-300 max-w-xl mx-auto">
-              Check calendar availability, view guest reviews, and complete your reservation securely on Airbnb.
+              Check calendar availability, view verified guest reviews, and reserve your stay securely on Airbnb.
             </p>
-            <div>
+            <div className="pt-2">
               <a
                 href={AIRBNB_URL}
                 target="_blank"
@@ -174,6 +231,15 @@ export default function App() {
           </p>
         </div>
       </footer>
+
+      {/* Full-Screen Lightbox Slideshow Modal */}
+      <LightboxModal
+        isOpen={isLightboxOpen}
+        onClose={handleCloseLightbox}
+        photos={PHOTOS}
+        currentIndex={currentPhotoIndex}
+        onIndexChange={(idx) => setCurrentPhotoIndex(idx)}
+      />
     </div>
   );
 }
