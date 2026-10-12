@@ -7,7 +7,8 @@ A modern, responsive landing page for **Oregon Haus**, a historic luxury Airbnb 
 - **Capacity:** 6 Bedrooms | 9 Beds | 6 Bathrooms (Ideal for large groups, family reunions, and executive retreats).
 - **Location:** Historic Oregon District, Dayton, OH — walkable to top dining, shops, and nightlife.
 - **Rating:** ★ 4.95 Superhost Listing
-- **Airbnb Listing:** [View on Airbnb](https://www.airbnb.com/rooms/1038646434083956823)
+- **Vrbo Listing:** [Book on Vrbo](https://www.vrbo.com/5520747?dateless=true)
+- **Virtual Tour:** Full 40-second stabilized walkthrough video integrated into the Hero Bento Grid and interactive Cinema Tour modal
 
 ## 🛠️ Tech Stack
 - **Framework:** React + Vite
